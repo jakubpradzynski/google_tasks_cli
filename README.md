@@ -1,4 +1,4 @@
-A sample command-line application.
+# Google Tasks CLI
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+## Description
+This app is a Command Line Interface for Google Tasks.
