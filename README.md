@@ -1,6 +1,7 @@
 # Google Tasks CLI
 
 &nbsp;
+[![buddy pipeline](https://app.buddy.works/jakubpradzynski/google-tasks-cli/pipelines/pipeline/237996/badge.svg?token=670afdbf3831caebf79f9f63149102ae4b3128655a842aab8ed7e721b99ec31c "buddy pipeline")](https://app.buddy.works/jakubpradzynski/google-tasks-cli/pipelines/pipeline/237996)
 
 ## Description
 This app is a Command Line Interface for Google Tasks.
