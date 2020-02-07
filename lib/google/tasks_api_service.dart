@@ -1,12 +1,11 @@
 import 'package:google_tasks_cli/google/models.dart' as models;
 import 'package:googleapis/tasks/v1.dart';
-import 'package:googleapis_auth/auth.dart';
 
 class TasksApiService {
   TasksApi _tasksApi;
 
-  TasksApiService(AuthClient authClient) {
-    _tasksApi = TasksApi(authClient);
+  TasksApiService(TasksApi tasksApi) {
+    _tasksApi = tasksApi;
   }
 
   Future<List<models.TaskList>> getTaskLists() => _tasksApi.tasklists

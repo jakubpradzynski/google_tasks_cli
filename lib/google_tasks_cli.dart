@@ -1,5 +1,6 @@
 import 'package:google_tasks_cli/google/api_authentication_service.dart';
-import 'package:google_tasks_cli/google/tasks_api.dart';
+import 'package:google_tasks_cli/google/tasks_api_service.dart';
+import 'package:googleapis/tasks/v1.dart';
 import 'package:prompts/prompts.dart' as prompt;
 
 class GoogleTasksCLI {
@@ -8,7 +9,7 @@ class GoogleTasksCLI {
   Future<void> run() async {
     _clearConsole();
     var authClient = await ApiAuthenticationService.fromEnvironmentVariables().getAuthorizedClient();
-    _tasksApiService = TasksApiService(authClient);
+    _tasksApiService = TasksApiService(TasksApi(authClient));
 
     while (true) {
       print('Google Tasks CLI');
