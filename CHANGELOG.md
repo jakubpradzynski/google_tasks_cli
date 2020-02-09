@@ -1,6 +1,8 @@
-## 1.0.1
+## 1.0.2
 
-- Connection with Google Tasks API (with authorization)
-- Displaying task lists
-- Adding new task to list
-- Displaying tasks in list
+<br></br>
+Added:
+- Deleting task from list
+- Few tests
+- Implementation on views
+- Predefined options

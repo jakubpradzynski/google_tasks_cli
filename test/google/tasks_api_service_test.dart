@@ -81,7 +81,6 @@ void main() {
 
   test('should add new task to list', () async {
     // GIVEN
-    var taskRequest = Task()..title = 'title';
     var task = Task.fromJson({
       'id': 'id',
       'title': 'title'
@@ -95,6 +94,17 @@ void main() {
     // THEN
     expect(result.id, isNot(null));
     expect(result.title, 'title');
+  });
+
+  test('should delete task', () async {
+    // GIVEN
+    when(tasksResourceApi.delete('listId', 'taskId')).thenAnswer((_) => Future.value(null));
+
+    // WHEN
+    var result = await tasksApiService.deleteTask('listId', 'taskId');
+
+    // THEN
+    expect(result, null);
   });
 
 }

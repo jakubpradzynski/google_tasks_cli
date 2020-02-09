@@ -19,4 +19,6 @@ class TasksApiService {
   Future<models.Task> addTaskToList(String listId, String task) => _tasksApi.tasks.insert(Task()..title = task, listId)
     .then((task) => task != null ? models.Task(task.id, task.title) : null);
 
+  Future<dynamic> deleteTask(String listId, String taskId) => _tasksApi.tasks.delete(listId, taskId);
+
 }
