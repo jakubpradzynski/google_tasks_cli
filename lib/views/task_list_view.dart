@@ -16,6 +16,7 @@ class TaskListView extends View {
   @override
   Future<Selectable> render() async {
     await super.render();
+    print('List - ${_list.title}');
     tasks ??= await tasksApiService.getTasks(_list.id, showHidden: true)
       ..sort((t1, t2) => t2.status.compareTo(t1.status));
     var tasksAndOptions = tasks
@@ -27,7 +28,7 @@ class TaskListView extends View {
             })
             .map((task) => task as Selectable)
             .toList() +
-        [ADD_NEW_TASK, showCompleted ? HIDE_COMPLETED : SHOW_COMPLETED, CLEAR_COMPLETED_TASKS, END];
+        [ADD_NEW_TASK, showCompleted ? HIDE_COMPLETED : SHOW_COMPLETED, CLEAR_COMPLETED_TASKS, EDIT_LIST_NAME, DELETE_LIST, END];
     var selectedTaskOrOption = prompt.choose('Select task or action', tasksAndOptions);
     if (selectedTaskOrOption == END) return END;
     if (selectedTaskOrOption == SHOW_COMPLETED) {
@@ -41,6 +42,13 @@ class TaskListView extends View {
         await tasksApiService.deleteTask(_list.id, task.id);
       }
       return TaskListView(tasksApiService, _list, showCompleted: showCompleted).render();
+    }
+    if (selectedTaskOrOption == EDIT_LIST_NAME) {
+      var newListName = prompt.get('New list name', defaultsTo: _list.title);
+      await tasksApiService.updateTaskListTitle(_list.id, newListName);
+    }
+    if (selectedTaskOrOption == DELETE_LIST) {
+      await tasksApiService.deleteTaskList(_list.id);
     }
     var result;
     if (selectedTaskOrOption == ADD_NEW_TASK) result = await NewTaskView(tasksApiService, _list).render();

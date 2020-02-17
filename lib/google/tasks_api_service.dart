@@ -11,15 +11,15 @@ class TasksApiService {
   }
 
   Future<List<models.TaskList>> getTaskLists() async {
-    var taskLists = [];
+    var taskLists = <TaskList>[];
     var result, items, nextPageToken;
     do {
       result = await _tasksApi.tasklists.list(maxResults: '100', pageToken: nextPageToken);
-      items = result.items ?? [];
+      items = result.items ?? <TaskList>[];
       taskLists.addAll(items);
       nextPageToken = result.nextPageToken;
     } while (items.length >= 100 && result.nextPageToken != null);
-    return taskLists.map((item) => models.TaskList(item.id, item.title)).toList();
+    return taskLists.map(_googleTaskListToTaskList).toList();
   }
 
   Future<List<models.Task>> getTasks(String listId, {bool showHidden = false}) async {
@@ -27,7 +27,7 @@ class TasksApiService {
     var result, items, nextPageToken;
     do {
       result = await _tasksApi.tasks.list(listId, showHidden: showHidden, maxResults: '100', pageToken: nextPageToken);
-      items = result.items ?? [];
+      items = result.items ?? <Task>[];
       tasks.addAll(items);
       nextPageToken = result.nextPageToken;
     } while (items.length >= 100 && result.nextPageToken != null);
@@ -50,7 +50,21 @@ class TasksApiService {
       _tasksApi.tasks.update(
           Task.fromJson({'id': taskId, 'title': newTitle, 'notes': newNotes, 'due': newDueDate}), listId, taskId);
 
+  Future<models.TaskList> addTaskList(String newListName) =>
+      _tasksApi.tasklists.insert(TaskList.fromJson({'title': newListName})).then(_googleTaskListToTaskListIfNotNull);
+
+  Future<dynamic> deleteTaskList(String listId) => _tasksApi.tasklists.delete(listId);
+
+  Future<models.TaskList> updateTaskListTitle(String listId, String newListName) => _tasksApi.tasklists
+      .update(TaskList.fromJson({'id': listId, 'title': newListName}), listId)
+      .then(_googleTaskListToTaskListIfNotNull);
+
   FutureOr<models.Task> _googleTaskToTaskIfNotNull(Task task) => task != null ? _googleTaskToTask(task) : null;
 
   models.Task _googleTaskToTask(Task task) => models.Task(task.id, task.title, task.status, task.notes, task.due);
+
+  FutureOr<models.TaskList> _googleTaskListToTaskListIfNotNull(TaskList taskList) =>
+      taskList != null ? _googleTaskListToTaskList(taskList) : null;
+
+  models.TaskList _googleTaskListToTaskList(TaskList taskList) => models.TaskList(taskList.id, taskList.title);
 }

@@ -16,11 +16,11 @@ class ExistingTaskView extends View {
     print('Task - ${_task.title}');
     print('Notes - ${_task.notes}');
     print('Due date - ${_task.due}');
-    var selectedOption = prompt.choose('What do you want to do with your task?', [EDIT, MARK_AS_COMPLETE, DELETE, END]);
+    var selectedOption = prompt.choose('What do you want to do with your task?', [EDIT_TASK, MARK_AS_COMPLETE, DELETE_TASK, END]);
     if (selectedOption == END) return END;
-    if (selectedOption == EDIT) {
+    if (selectedOption == EDIT_TASK) {
       var editedTitle = prompt.get('New task title:', defaultsTo: _task.title);
-      var editedNotes = prompt.get('New task note:', defaultsTo: _task.notes, allowMultiline: true);
+      var editedNotes = prompt.get('New task note:', defaultsTo: _task.notes ?? '', allowMultiline: true);
       var editedDueDate =
           prompt.get('New due date, example "2020-01-01":', defaultsTo: dateFromDateTime(_task.due)) + 'T00:00:00.0Z';
       await tasksApiService.updateTaskTitle(_list.id, _task.id,
@@ -29,7 +29,7 @@ class ExistingTaskView extends View {
     if (selectedOption == MARK_AS_COMPLETE) {
       await tasksApiService.markTaskAsComplete(_list.id, _task.id);
     }
-    if (selectedOption == DELETE) {
+    if (selectedOption == DELETE_TASK) {
       await tasksApiService.deleteTask(_list.id, _task.id);
     }
     return REFRESH_LIST;

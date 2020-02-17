@@ -11,7 +11,14 @@ class TaskListsView extends View {
   Future<Selectable> render() async {
     await super.render();
     var taskLists = await tasksApiService.getTaskLists();
-    var selectedList = prompt.choose('Select list', taskLists);
-    return TaskListView(tasksApiService, selectedList).render();
+    var taskListsOrOption = taskLists.map((taskList) => taskList as Selectable).toList() + [ADD_NEW_LIST, END];
+    var selectedTaskListsOrOption = prompt.choose('Select list', taskListsOrOption);
+    if (selectedTaskListsOrOption == END) return END;
+    if (selectedTaskListsOrOption == ADD_NEW_LIST) {
+      var newListName = prompt.get('New list name');
+      await tasksApiService.addTaskList(newListName);
+      return TaskListsView(tasksApiService).render();
+    }
+    return TaskListView(tasksApiService, selectedTaskListsOrOption as TaskList).render();
   }
 }
