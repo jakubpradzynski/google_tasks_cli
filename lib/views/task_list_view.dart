@@ -29,7 +29,7 @@ class TaskListView extends View {
             .toList() +
         [ADD_NEW_TASK, showCompleted ? HIDE_COMPLETED : SHOW_COMPLETED, CLEAR_COMPLETED_TASKS, END];
     var selectedTaskOrOption = prompt.choose('Select task or action', tasksAndOptions);
-    if (selectedTaskOrOption == END) return selectedTaskOrOption;
+    if (selectedTaskOrOption == END) return END;
     if (selectedTaskOrOption == SHOW_COMPLETED) {
       return TaskListView(tasksApiService, _list, tasks: tasks, showCompleted: true).render();
     }

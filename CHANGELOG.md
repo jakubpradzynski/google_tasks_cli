@@ -1,8 +1,8 @@
-## 1.0.2
+## 1.0.3
 
 <br></br>
 Added:
-- Deleting task from list
-- Few tests
-- Implementation on views
-- Predefined options
+- Marking tasks as complete
+- Displaying task notes and due date
+- Editing tasks
+- Cleaning tasks mark as completed 

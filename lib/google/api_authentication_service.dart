@@ -29,7 +29,8 @@ class ApiAuthenticationService {
   Future<AuthClient> loadAuthClientFromFileOrOnline() {
     var credentials = File(_credentialsFilePath);
     if (credentials.existsSync()) {
-      return Future.value(autoRefreshingClient(ClientId(_clientId, _clientSecret), _credentialsFromJson(credentials.readAsStringSync()), Client()));
+      return Future.value(autoRefreshingClient(
+          ClientId(_clientId, _clientSecret), _credentialsFromJson(credentials.readAsStringSync()), Client()));
     } else {
       return clientViaUserConsent(ClientId(_clientId, _clientSecret), _scopes, _prompt)
         ..then((authClient) => {

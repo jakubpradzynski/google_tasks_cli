@@ -4,9 +4,16 @@ class TaskList extends Selectable {
 
 class Task extends Selectable {
   final String _status;
-  Task(id, title, this._status): super(id, title);
+  final String _notes;
+  final DateTime _due;
+
+  Task(id, title, this._status, this._notes, this._due) : super(id, title);
 
   String get status => _status;
+
+  String get notes => _notes;
+
+  DateTime get due => _due;
 
   @override
   String toString() {
@@ -18,7 +25,7 @@ class Task extends Selectable {
 }
 
 class PredefinedOption extends Selectable {
-  PredefinedOption(id, title): super(id, title);
+  PredefinedOption(id, title) : super(id, title);
 
   @override
   String toString() => '----- $_title -----';
@@ -42,6 +49,7 @@ abstract class Selectable {
   Selectable(this._id, this._title);
 
   String get id => _id;
+
   String get title => _title;
 
   @override

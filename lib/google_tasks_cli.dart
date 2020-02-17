@@ -19,7 +19,4 @@ class GoogleTasksCLI {
     }
     authClient.close();
   }
-
 }
-
-
