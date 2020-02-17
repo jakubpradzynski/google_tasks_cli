@@ -37,4 +37,9 @@ class TasksApiService {
       .then((task) => task != null ? models.Task(task.id, task.title, task.status) : null);
 
   Future<dynamic> deleteTask(String listId, String taskId) => _tasksApi.tasks.delete(listId, taskId);
+
+  Future<Task> markTaskAsComplete(String listId, String taskId) => _tasksApi.tasks.update(
+      Task.fromJson({'id': taskId, 'status': 'completed', 'completed': DateTime.now().toUtc().toIso8601String()}),
+      listId,
+      taskId);
 }

@@ -11,10 +11,14 @@ class ExistingTaskView extends View {
 
   @override
   Future<Selectable> render() async {
-    var selectedOption = prompt.choose('What do you want to do with your task?', [EDIT, MARK_AS_COMPLETE, DELETE, END]);
+    await super.render();
+    var selectedOption = prompt.choose('What do you want to do with your task? - ${_task}', [EDIT, MARK_AS_COMPLETE, DELETE, END]);
     if (selectedOption == END) return END;
     if (selectedOption == DELETE) {
       await tasksApiService.deleteTask(_list.id, _task.id);
+    }
+    if (selectedOption == MARK_AS_COMPLETE) {
+      await tasksApiService.markTaskAsComplete(_list.id, _task.id);
     }
     return REFRESH_LIST;
   }

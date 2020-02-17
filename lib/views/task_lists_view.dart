@@ -9,6 +9,7 @@ class TaskListsView extends View {
 
   @override
   Future<Selectable> render() async {
+    await super.render();
     var taskLists = await tasksApiService.getTaskLists();
     var selectedList = prompt.choose('Select list', taskLists);
     return TaskListView(tasksApiService, selectedList).render();

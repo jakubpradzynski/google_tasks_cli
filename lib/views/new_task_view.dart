@@ -10,6 +10,7 @@ class NewTaskView extends View {
 
   @override
   Future<Selectable> render() async {
+    await super.render();
     var newTask = prompt.get('Your new task');
     await tasksApiService.addTaskToList(_list.id, newTask);
     return REFRESH_LIST;
