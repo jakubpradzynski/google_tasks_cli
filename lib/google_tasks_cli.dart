@@ -10,22 +10,16 @@ class GoogleTasksCLI {
   Future<void> run() async {
     var authClient = await ApiAuthenticationService.fromEnvironmentVariables().getAuthorizedClient();
     _tasksApiService = TasksApiService(TasksApi(authClient));
-    _clearConsole();
 
     while (true) {
-      print('Google Tasks CLI');
       var selectedOption = await TaskListsView(_tasksApiService).render();
       if (selectedOption == END) {
         break;
       }
-      _clearConsole();
     }
     authClient.close();
   }
 
-  void _clearConsole() {
-    print('\x1B[2J\x1B[0;0H');
-  }
 }
 
 

@@ -11,7 +11,7 @@ class ExistingTaskView extends View {
 
   @override
   Future<Selectable> render() async {
-    var selectedOption = prompt.choose('What do you want to do with your task', [EDIT, MARK_AS_COMPLETE, DELETE, END]);
+    var selectedOption = prompt.choose('What do you want to do with your task?', [EDIT, MARK_AS_COMPLETE, DELETE, END]);
     if (selectedOption == END) return END;
     if (selectedOption == DELETE) {
       await tasksApiService.deleteTask(_list.id, _task.id);

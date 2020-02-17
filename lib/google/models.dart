@@ -3,7 +3,18 @@ class TaskList extends Selectable {
 }
 
 class Task extends Selectable {
-  Task(id, title): super(id, title);
+  final String _status;
+  Task(id, title, this._status): super(id, title);
+
+  String get status => _status;
+
+  @override
+  String toString() {
+    if (status == 'completed') {
+      return '+ ' + super.toString() + ' +';
+    }
+    return super.toString();
+  }
 }
 
 class PredefinedOption extends Selectable {
@@ -20,6 +31,8 @@ var ADD_NEW_TASK = PredefinedOption('4', 'ADD NEW TASK');
 var MARK_AS_COMPLETE = PredefinedOption('5', 'MARK AS COMPLETE');
 var REFRESH_LIST = PredefinedOption('6', 'REFRESH LIST');
 var DO_NOTHING = PredefinedOption('7', 'DO NOTHING');
+var SHOW_COMPLETED = PredefinedOption('8', 'SHOW COMPLETED');
+var HIDE_COMPLETED = PredefinedOption('9', 'HIDE COMPLETED');
 
 abstract class Selectable {
   final String _id;
