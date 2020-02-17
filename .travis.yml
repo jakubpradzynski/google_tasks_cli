@@ -3,6 +3,11 @@ dart:
   - stable
 install:
   - pub get
+env:
+  global:
+    - GoogleApiClientId=id
+    - GoogleApiClientSecret=secret
+    - GoogleApiCredentialsFilePath=path
 script:
   - pub run test
   - dart2native bin/main.dart
