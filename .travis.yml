@@ -1,0 +1,14 @@
+language: dart
+dart:
+  - stable
+install:
+  - pub get
+script:
+  - pub run test
+  - dart2native bin/main.dart
+notifications:
+  email:
+    recipients:
+      - jakub.pradzynski@gmail.com
+    on_failure: always
+    on_success: never
