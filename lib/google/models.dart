@@ -33,6 +33,7 @@ var REFRESH_LIST = PredefinedOption('6', 'REFRESH LIST');
 var DO_NOTHING = PredefinedOption('7', 'DO NOTHING');
 var SHOW_COMPLETED = PredefinedOption('8', 'SHOW COMPLETED');
 var HIDE_COMPLETED = PredefinedOption('9', 'HIDE COMPLETED');
+var CLEAR_COMPLETED_TASKS = PredefinedOption('10', 'CLEAR COMPLETED TASKS');
 
 abstract class Selectable {
   final String _id;

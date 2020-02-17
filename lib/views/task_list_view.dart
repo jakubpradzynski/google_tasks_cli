@@ -27,7 +27,7 @@ class TaskListView extends View {
             })
             .map((task) => task as Selectable)
             .toList() +
-        [ADD_NEW_TASK, showCompleted ? HIDE_COMPLETED : SHOW_COMPLETED, END];
+        [ADD_NEW_TASK, showCompleted ? HIDE_COMPLETED : SHOW_COMPLETED, CLEAR_COMPLETED_TASKS, END];
     var selectedTaskOrOption = prompt.choose('Select task or action', tasksAndOptions);
     if (selectedTaskOrOption == END) return selectedTaskOrOption;
     if (selectedTaskOrOption == SHOW_COMPLETED) {
@@ -35,6 +35,12 @@ class TaskListView extends View {
     }
     if (selectedTaskOrOption == HIDE_COMPLETED) {
       return TaskListView(tasksApiService, _list, tasks: tasks, showCompleted: false).render();
+    }
+    if (selectedTaskOrOption == CLEAR_COMPLETED_TASKS) {
+      for (var task in tasks.where((task) => task.status == 'completed')) {
+        await tasksApiService.deleteTask(_list.id, task.id);
+      }
+      return TaskListView(tasksApiService, _list, showCompleted: showCompleted).render();
     }
     var result;
     if (selectedTaskOrOption == ADD_NEW_TASK) result = await NewTaskView(tasksApiService, _list).render();
