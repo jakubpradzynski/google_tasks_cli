@@ -42,4 +42,7 @@ class TasksApiService {
       Task.fromJson({'id': taskId, 'status': 'completed', 'completed': DateTime.now().toUtc().toIso8601String()}),
       listId,
       taskId);
+
+  Future<Task> updateTaskTitle(String listId, String taskId, String title) =>
+      _tasksApi.tasks.update(Task.fromJson({'id': taskId, 'title': title}), listId, taskId);
 }
