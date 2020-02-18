@@ -25,10 +25,19 @@ class Task extends Selectable {
 }
 
 class PredefinedOption extends Selectable {
-  PredefinedOption(id, title) : super(id, title);
+  String _suffixTitleSpaces;
+  String _prefixTitleSpaces;
+  final _SPACE_LENGTH = 25;
+
+  PredefinedOption(id, title) : super(id, title) {
+    _suffixTitleSpaces =
+        [for (var i = 0; i < ((_SPACE_LENGTH - (_title.length + 2)) / 2).ceil(); i++) ' '].reduce((a, b) => a + b);
+    _prefixTitleSpaces =
+        [for (var i = 0; i < ((_SPACE_LENGTH - (_title.length + 2)) / 2).floor(); i++) ' '].reduce((a, b) => a + b);
+  }
 
   @override
-  String toString() => '----- $_title -----';
+  String toString() => '-----${_prefixTitleSpaces} $_title ${_suffixTitleSpaces}-----';
 }
 
 var END = PredefinedOption('1', 'END');
