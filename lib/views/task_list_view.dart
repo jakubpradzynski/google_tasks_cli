@@ -28,9 +28,9 @@ class TaskListView extends View {
             })
             .map((task) => task as Selectable)
             .toList() +
-        [ADD_NEW_TASK, showCompleted ? HIDE_COMPLETED : SHOW_COMPLETED, CLEAR_COMPLETED_TASKS, EDIT_LIST_NAME, DELETE_LIST, END];
+        [ADD_NEW_TASK, showCompleted ? HIDE_COMPLETED : SHOW_COMPLETED, CLEAR_COMPLETED_TASKS, EDIT_LIST_NAME, DELETE_LIST, BACK];
     var selectedTaskOrOption = prompt.choose('Select task or action', tasksAndOptions);
-    if (selectedTaskOrOption == END) return END;
+    if (selectedTaskOrOption == BACK) return BACK;
     if (selectedTaskOrOption == SHOW_COMPLETED) {
       return TaskListView(tasksApiService, _list, tasks: tasks, showCompleted: true).render();
     }
@@ -55,6 +55,7 @@ class TaskListView extends View {
     if (selectedTaskOrOption is Task) {
       result = await ExistingTaskView(tasksApiService, _list, selectedTaskOrOption).render();
     }
+    if (result == BACK) return TaskListView(tasksApiService, _list, showCompleted: showCompleted).render();
     if (result == REFRESH_LIST) return TaskListView(tasksApiService, _list, showCompleted: showCompleted).render();
     return DO_NOTHING;
   }

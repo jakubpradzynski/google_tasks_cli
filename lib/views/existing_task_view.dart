@@ -16,8 +16,8 @@ class ExistingTaskView extends View {
     print('Task - ${_task.title}');
     print('Notes - ${_task.notes}');
     print('Due date - ${_task.due}');
-    var selectedOption = prompt.choose('What do you want to do with your task?', [EDIT_TASK, MARK_AS_COMPLETE, DELETE_TASK, END]);
-    if (selectedOption == END) return END;
+    var selectedOption = prompt.choose('What do you want to do with your task?', [EDIT_TASK, MARK_AS_COMPLETE, DELETE_TASK, BACK]);
+    if (selectedOption == BACK) return BACK;
     if (selectedOption == EDIT_TASK) {
       var editedTitle = prompt.get('New task title:', defaultsTo: _task.title);
       var editedNotes = prompt.get('New task note:', defaultsTo: _task.notes ?? '', allowMultiline: true);

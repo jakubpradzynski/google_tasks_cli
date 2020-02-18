@@ -44,6 +44,7 @@ var CLEAR_COMPLETED_TASKS = PredefinedOption('10', 'CLEAR COMPLETED TASKS');
 var ADD_NEW_LIST = PredefinedOption('10', 'ADD NEW LIST');
 var DELETE_LIST = PredefinedOption('11', 'DELETE LIST');
 var EDIT_LIST_NAME = PredefinedOption('12', 'EDIT LIST NAME');
+var BACK = PredefinedOption('13', 'BACK');
 
 abstract class Selectable {
   final String _id;
