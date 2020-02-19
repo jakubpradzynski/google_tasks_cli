@@ -16,13 +16,15 @@ class ExistingTaskView extends View {
     print('Task - ${_task.title}');
     print('Notes - ${_task.notes}');
     print('Due date - ${_task.due}');
-    var selectedOption = prompt.choose('What do you want to do with your task?', [EDIT_TASK, MARK_AS_COMPLETE, DELETE_TASK, BACK]);
+    var selectedOption =
+        prompt.choose('What do you want to do with your task?', [EDIT_TASK, MARK_AS_COMPLETE, DELETE_TASK, BACK]);
     if (selectedOption == BACK) return BACK;
     if (selectedOption == EDIT_TASK) {
       var editedTitle = prompt.get('New task title:', defaultsTo: _task.title);
       var editedNotes = prompt.get('New task note:', defaultsTo: _task.notes ?? '', allowMultiline: true);
       var editedDueDate =
-          prompt.get('New due date, example "2020-01-01":', defaultsTo: dateFromDateTime(_task.due)) + 'T00:00:00.0Z';
+          prompt.get('New due date, example "2020-01-01":', defaultsTo: dateFromDateTime(_task.due) ?? '');
+      if (editedDueDate != null && editedDueDate != '') editedDueDate += 'T00:00:00.0Z';
       await tasksApiService.updateTaskTitle(_list.id, _task.id,
           newTitle: editedTitle, newNotes: editedNotes, newDueDate: editedDueDate);
     }

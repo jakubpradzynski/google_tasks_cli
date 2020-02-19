@@ -46,9 +46,15 @@ class TasksApiService {
           taskId)
       .then(_googleTaskToTaskIfNotNull);
 
-  Future<Task> updateTaskTitle(String listId, String taskId, {String newTitle, String newNotes, String newDueDate}) =>
-      _tasksApi.tasks.update(
-          Task.fromJson({'id': taskId, 'title': newTitle, 'notes': newNotes, 'due': newDueDate}), listId, taskId);
+  Future<Task> updateTaskTitle(String listId, String taskId, {String newTitle, String newNotes, String newDueDate}) {
+    if (newDueDate == null || newDueDate == '') {
+      return _tasksApi.tasks.update(
+          Task.fromJson({'id': taskId, 'title': newTitle, 'notes': newNotes}), listId, taskId);
+    }
+    return _tasksApi.tasks.update(
+        Task.fromJson({'id': taskId, 'title': newTitle, 'notes': newNotes, 'due': newDueDate}), listId, taskId);
+  }
+
 
   Future<models.TaskList> addTaskList(String newListName) =>
       _tasksApi.tasklists.insert(TaskList.fromJson({'title': newListName})).then(_googleTaskListToTaskListIfNotNull);
