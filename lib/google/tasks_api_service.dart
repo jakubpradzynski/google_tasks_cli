@@ -34,8 +34,13 @@ class TasksApiService {
     return tasks.map(_googleTaskToTask).toList();
   }
 
-  Future<models.Task> addTaskToList(String listId, String task) =>
-      _tasksApi.tasks.insert(Task()..title = task, listId).then(_googleTaskToTaskIfNotNull);
+  Future<models.Task> addTaskToList(String listId, String title, {String notes, String dueDate}) {
+    var request = Task.fromJson({'title': title, 'notes': notes});
+    if (dueDate != null && dueDate.isNotEmpty) {
+      request.due = DateTime.parse(dueDate);
+    }
+    return _tasksApi.tasks.insert(request, listId).then(_googleTaskToTaskIfNotNull);
+  }
 
   Future<dynamic> deleteTask(String listId, String taskId) => _tasksApi.tasks.delete(listId, taskId);
 
@@ -47,14 +52,12 @@ class TasksApiService {
       .then(_googleTaskToTaskIfNotNull);
 
   Future<Task> updateTaskTitle(String listId, String taskId, {String newTitle, String newNotes, String newDueDate}) {
-    if (newDueDate == null || newDueDate == '') {
-      return _tasksApi.tasks.update(
-          Task.fromJson({'id': taskId, 'title': newTitle, 'notes': newNotes}), listId, taskId);
+    var request = Task.fromJson({'id': taskId, 'title': newTitle, 'notes': newNotes});
+    if (newDueDate != null && newDueDate.isNotEmpty) {
+      request.due = DateTime.parse(newDueDate);
     }
-    return _tasksApi.tasks.update(
-        Task.fromJson({'id': taskId, 'title': newTitle, 'notes': newNotes, 'due': newDueDate}), listId, taskId);
+    return _tasksApi.tasks.update(request, listId, taskId);
   }
-
 
   Future<models.TaskList> addTaskList(String newListName) =>
       _tasksApi.tasklists.insert(TaskList.fromJson({'title': newListName})).then(_googleTaskListToTaskListIfNotNull);

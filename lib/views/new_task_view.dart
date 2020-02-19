@@ -11,8 +11,13 @@ class NewTaskView extends View {
   @override
   Future<Selectable> render() async {
     await super.render();
-    var newTask = prompt.get('Your new task');
-    await tasksApiService.addTaskToList(_list.id, newTask);
+    var newTaskTitle = prompt.get('Your new task:', defaultsTo: '');
+    var newTaskNotes = prompt.get('Task notes:', defaultsTo: '');
+    var newTaskDueDate = prompt.get('Task due date, example "2020-01-01":', defaultsTo: '');
+    if (newTaskTitle != null && newTaskTitle.isNotEmpty) {
+      if (newTaskDueDate != null && newTaskDueDate.isNotEmpty) newTaskDueDate += 'T00:00:00.0Z';
+      await tasksApiService.addTaskToList(_list.id, newTaskTitle, notes: newTaskNotes, dueDate: newTaskDueDate);
+    }
     return REFRESH_LIST;
   }
 }
