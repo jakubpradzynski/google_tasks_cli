@@ -1,7 +1,7 @@
 # Google Tasks CLI
 
 &nbsp;
-[![Build Status](https://travis-ci.com/jakubpradzynski/google_tasks_cli.svg?branch=master)](https://travis-ci.com/jakubpradzynski/google_tasks_cli)
+![Travis (.com)](https://img.shields.io/travis/com/jakubpradzynski/google_tasks_cli?label=Google%20Tasks%20CLI)
 
 ## Description
 This app is a Command Line Interface for Google Tasks.
