@@ -1,6 +1,6 @@
 name: google_tasks_cli
 description: A sample command-line application.
-version: 1.0.4
+version: 1.0.5
 homepage: https://github.com/jakubpradzynski/google_tasks_cli
 
 environment:

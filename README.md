@@ -44,6 +44,22 @@ In Bash:
 export PATH=$PATH:~/google_tasks_cli/bin
 ```
 
+### Installation scripts
+If you don't need to configure app setup you can use install scripts.
+There are 2 scripts available for bash and fish shell.
+Both require to pass *clientId* and *clientSecret* from [Google Console](https://console.developers.google.com/).
+
+Bash:
+
+```./install.sh clientId clientSecret```
+
+Fish:
+
+```./install.fish clientId clientSecret```
+
+
+Then you can just run the app by command `google_tasks_cli`.
+
 &nbsp;
 
 ## First run

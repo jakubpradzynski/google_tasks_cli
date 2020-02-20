@@ -1,7 +1,8 @@
-## 1.0.4
+## 1.0.5
 
 <br></br>
 Added:
-- Add new list
-- Edit list name
-- Delete list
+- BACK option
+- Ending job only from list select view 
+- Adding new task with notes and date (default nothing)
+- install.sh and install.fish for quick app setup 
