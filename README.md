@@ -67,3 +67,14 @@ When you run the app for the first time, you have to add allow app operate on yo
 That's why you will be ask for enter to the given link and give appropriate permissions.
 App will save received credentials to file set in environment variable **GoogleApiCredentialsFilePath**
 and refresh token when it's necessary.
+
+&nbsp;
+
+## Notifications
+On **MacOS** when you start app, you will receive notifications about tasks to do with due date set on today.
+If you wan't to change alert style you have to go to `System Preferences` > `Notifications` > `Script Editor`
+and change the `alert style` to `Alerts`:
+
+![Settings](https://i.stack.imgur.com/uDGa1.png)
+
+&nbsp;

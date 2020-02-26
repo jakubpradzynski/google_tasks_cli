@@ -1,4 +1,4 @@
-import 'package:google_tasks_cli/google/models.dart';
+import 'package:google_tasks_cli/models.dart';
 import 'package:google_tasks_cli/google/tasks_api_service.dart';
 import 'package:google_tasks_cli/views/view.dart';
 import 'package:prompts/prompts.dart' as prompt;

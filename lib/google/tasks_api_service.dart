@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:google_tasks_cli/google/models.dart' as models;
+import 'package:google_tasks_cli/models.dart' as models;
 import 'package:googleapis/tasks/v1.dart';
 
 class TasksApiService {

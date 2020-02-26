@@ -1,8 +1,5 @@
-## 1.0.5
+## 1.0.6
 
 <br></br>
 Added:
-- BACK option
-- Ending job only from list select view 
-- Adding new task with notes and date (default nothing)
-- install.sh and install.fish for quick app setup 
+- Display notification with tasks to do for today on MacOS after app starts
