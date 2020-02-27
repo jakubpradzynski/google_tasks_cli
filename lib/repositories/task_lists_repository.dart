@@ -50,7 +50,7 @@ class TaskListsRepository {
     }
   }
 
-  Future<void> updateTask(String listId, String taskId, {String newTitle, String newNotes, String newDueDate}) async {
+  Future<void> updateTask(String listId, String taskId, {String newTitle, String newNotes, DateTime newDueDate}) async {
     var updatedTask = await _tasksApiService.updateTask(listId, taskId,
         newTitle: newTitle, newNotes: newNotes, newDueDate: newDueDate);
     if (updatedTask != null) {

@@ -1,5 +1,4 @@
 import 'package:google_tasks_cli/models.dart';
-import 'package:google_tasks_cli/google/tasks_api_service.dart';
 import 'package:google_tasks_cli/repositories/task_lists_repository.dart';
 import 'package:google_tasks_cli/utils/date_utils.dart';
 import 'package:google_tasks_cli/views/view.dart';
@@ -25,9 +24,15 @@ class ExistingTaskView extends View {
       var editedNotes = prompt.get('New task note:', defaultsTo: _task.notes ?? '', allowMultiline: true);
       var editedDueDate =
           prompt.get('New due date, example "2020-01-01":', defaultsTo: dateFromDateTime(_task.due) ?? '');
-      if (editedDueDate != null && editedDueDate != '') editedDueDate += 'T00:00:00.0Z';
+      var dueDate;
+      if (editedDueDate == 'null') {
+        dueDate = null;
+      } else if (editedDueDate != null && editedDueDate != '') {
+        dueDate = DateTime.parse(editedDueDate += 'T00:00:00.0Z');
+      }
+      if (editedNotes == 'null') editedNotes = '';
       await taskListsRepository.updateTask(_list.id, _task.id,
-          newTitle: editedTitle, newNotes: editedNotes, newDueDate: editedDueDate);
+          newTitle: editedTitle, newNotes: editedNotes, newDueDate: dueDate);
     }
     if (selectedOption == MARK_AS_COMPLETE) {
       await taskListsRepository.markTaskAsComplete(_list.id, _task.id);

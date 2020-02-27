@@ -51,11 +51,13 @@ class TasksApiService {
           taskId)
       .then(_googleTaskToTaskIfNotNull);
 
-  Future<models.Task> updateTask(String listId, String taskId, {String newTitle, String newNotes, String newDueDate}) {
-    var request = Task.fromJson({'id': taskId, 'title': newTitle, 'notes': newNotes});
-    if (newDueDate != null && newDueDate.isNotEmpty) {
-      request.due = DateTime.parse(newDueDate);
-    }
+  Future<models.Task> updateTask(String listId, String taskId,
+      {String newTitle, String newNotes, DateTime newDueDate}) {
+    var request = Task()
+      ..id = taskId
+      ..title = newTitle
+      ..notes = newNotes
+      ..due = newDueDate;
     return _tasksApi.tasks.update(request, listId, taskId).then(_googleTaskToTaskIfNotNull);
   }
 

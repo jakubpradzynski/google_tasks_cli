@@ -1,6 +1,6 @@
 name: google_tasks_cli
 description: CLI for Google Tasks.
-version: 1.0.6
+version: 1.0.7
 homepage: https://github.com/jakubpradzynski/google_tasks_cli
 
 environment:

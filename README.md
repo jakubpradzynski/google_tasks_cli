@@ -78,3 +78,11 @@ and change the `alert style` to `Alerts`:
 ![Settings](https://i.stack.imgur.com/uDGa1.png)
 
 &nbsp;
+
+## Usage
+
+### Clearing task notes and due date
+When you edit task you can write `null` in notes and due date to clear them.
+
+### Multiline task notes
+You can write task notes in multiline by ending line with ` \ `.

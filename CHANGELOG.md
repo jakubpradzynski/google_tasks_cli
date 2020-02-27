@@ -1,5 +1,5 @@
-## 1.0.6
+## 1.0.7
 
 <br></br>
 Added:
-- Display notification with tasks to do for today on MacOS after app starts
+- Clearing task notes and due date by writing `null` 
