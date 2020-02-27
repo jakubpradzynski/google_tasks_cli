@@ -1,5 +1,4 @@
 import 'package:google_tasks_cli/models.dart';
-import 'package:google_tasks_cli/google/tasks_api_service.dart';
 import 'package:google_tasks_cli/repositories/task_lists_repository.dart';
 
 abstract class View {

@@ -64,7 +64,6 @@ class ApiAuthenticationService {
   void _prompt(String url) {
     print('Google Tasks CLI');
     print('Please go to the following URL and grant access:');
-    print('  => $url');
-    print('');
+    print('=> $url');
   }
 }

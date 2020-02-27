@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:google_tasks_cli/models.dart';
 import 'package:google_tasks_cli/repositories/task_lists_repository.dart';
 import 'package:google_tasks_cli/views/existing_task_view.dart';
@@ -51,7 +49,7 @@ class TaskListView extends View {
       return TaskListView(taskListsRepository, _list, showCompleted: showCompleted).render();
     }
     if (selectedTaskOrOption == EDIT_LIST_NAME) {
-      var newListName = prompt.get('New list name', defaultsTo: _list.title);
+      var newListName = prompt.get('New list name:', defaultsTo: _list.title);
       await taskListsRepository.updateTaskListTitle(_list.id, newListName);
     }
     if (selectedTaskOrOption == DELETE_LIST) {
