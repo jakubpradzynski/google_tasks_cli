@@ -19,7 +19,10 @@ class GoogleTasksCLI {
     await TasksForTodayNotifier(taskListsRepository).notify();
 
     while (true) {
-      var selectedOption = await TaskListsView(_tasksApiService).render();
+      var selectedOption = await TaskListsView(taskListsRepository).render();
+      if (selectedOption == REFRESH) {
+        await taskListsRepository.synchronizeData();
+      }
       if (selectedOption == END) {
         break;
       }

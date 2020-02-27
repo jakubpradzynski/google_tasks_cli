@@ -1,24 +1,26 @@
 import 'package:google_tasks_cli/models.dart';
 import 'package:google_tasks_cli/google/tasks_api_service.dart';
+import 'package:google_tasks_cli/repositories/task_lists_repository.dart';
 import 'package:google_tasks_cli/views/task_list_view.dart';
 import 'package:google_tasks_cli/views/view.dart';
 import 'package:prompts/prompts.dart' as prompt;
 
 class TaskListsView extends View {
-  TaskListsView(TasksApiService tasksApiService) : super(tasksApiService);
+  TaskListsView(TaskListsRepository taskListsRepository) : super(taskListsRepository);
 
   @override
   Future<Selectable> render() async {
     await super.render();
-    var taskLists = await tasksApiService.getTaskLists();
-    var taskListsOrOption = taskLists.map((taskList) => taskList as Selectable).toList() + [ADD_NEW_LIST, END];
+    var taskLists = taskListsRepository.taskLists;
+    var taskListsOrOption = taskLists.map((taskList) => taskList as Selectable).toList() + [ADD_NEW_LIST, REFRESH, END];
     var selectedTaskListsOrOption = prompt.choose('Select list', taskListsOrOption);
     if (selectedTaskListsOrOption == END) return END;
+    if (selectedTaskListsOrOption == REFRESH) return REFRESH;
     if (selectedTaskListsOrOption == ADD_NEW_LIST) {
       var newListName = prompt.get('New list name');
-      await tasksApiService.addTaskList(newListName);
-      return TaskListsView(tasksApiService).render();
+      await taskListsRepository.addTaskList(newListName);
+      return TaskListsView(taskListsRepository).render();
     }
-    return TaskListView(tasksApiService, selectedTaskListsOrOption as TaskList).render();
+    return TaskListView(taskListsRepository, selectedTaskListsOrOption as TaskList).render();
   }
 }

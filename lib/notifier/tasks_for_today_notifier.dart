@@ -16,7 +16,6 @@ class TasksForTodayNotifier {
   }
 
   Future<void> _notifyOnMacOS(Map<TaskList, List<Task>> tasksToNotify) async {
-    print(tasksToNotify);
     for (var entry in tasksToNotify.entries) {
       for (var task in entry.value) {
         await Process.run('osascript',

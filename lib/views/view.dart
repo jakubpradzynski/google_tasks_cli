@@ -1,16 +1,17 @@
 import 'package:google_tasks_cli/models.dart';
 import 'package:google_tasks_cli/google/tasks_api_service.dart';
+import 'package:google_tasks_cli/repositories/task_lists_repository.dart';
 
 abstract class View {
-  final TasksApiService _tasksApiService;
+  final TaskListsRepository _taskListsRepository;
 
-  View(this._tasksApiService);
+  View(this._taskListsRepository);
 
   Future<Selectable> render() {
     _clearConsole();
   }
 
-  TasksApiService get tasksApiService => _tasksApiService;
+  TaskListsRepository get taskListsRepository => _taskListsRepository;
 }
 
 void _clearConsole() {
