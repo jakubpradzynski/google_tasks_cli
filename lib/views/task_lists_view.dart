@@ -10,16 +10,21 @@ class TaskListsView extends View {
   @override
   Future<Selectable> render() async {
     await super.render();
-    var taskLists = taskListsRepository.taskLists;
-    var taskListsOrOption = taskLists.map((taskList) => taskList as Selectable).toList() + [ADD_NEW_LIST, REFRESH, END];
+    var taskListsOrOption = getTaskLists() + _getAllowedOptions();
     var selectedTaskListsOrOption = prompt.choose('Select list', taskListsOrOption);
     if (selectedTaskListsOrOption == END) return END;
     if (selectedTaskListsOrOption == REFRESH) return REFRESH;
-    if (selectedTaskListsOrOption == ADD_NEW_LIST) {
-      var newListName = prompt.get('New list name:');
-      await taskListsRepository.addTaskList(newListName);
-      return TaskListsView(taskListsRepository).render();
-    }
+    if (selectedTaskListsOrOption == ADD_NEW_LIST) return await _addNewTaskList();
     return TaskListView(taskListsRepository, selectedTaskListsOrOption as TaskList).render();
   }
+
+  Future<Selectable> _addNewTaskList() async {
+    var newListName = prompt.get('New list name:');
+    await taskListsRepository.addTaskList(newListName);
+    return TaskListsView(taskListsRepository).render();
+  }
+
+  List<Selectable> getTaskLists() => taskListsRepository.taskLists.map((taskList) => taskList as Selectable).toList();
+
+  List<Selectable> _getAllowedOptions() => [ADD_NEW_LIST, REFRESH, END];
 }

@@ -29,15 +29,23 @@ class ApiAuthenticationService {
   Future<AuthClient> loadAuthClientFromFileOrOnline() {
     var credentials = File(_credentialsFilePath);
     if (credentials.existsSync()) {
-      return Future.value(autoRefreshingClient(
-          ClientId(_clientId, _clientSecret), _credentialsFromJson(credentials.readAsStringSync()), Client()));
+      return _autoRefreshingClientFromFile(credentials);
     } else {
-      return clientViaUserConsent(ClientId(_clientId, _clientSecret), _scopes, _prompt)
-        ..then((authClient) => {
-              credentials.writeAsStringSync(_credentialsToJson(authClient.credentials),
-                  mode: FileMode.write, encoding: utf8, flush: true)
-            });
+      return _newClientWithSavedCredentialsInFile(credentials);
     }
+  }
+
+  Future<AuthClient> _autoRefreshingClientFromFile(File credentials) {
+    return Future.value(autoRefreshingClient(
+        ClientId(_clientId, _clientSecret), _credentialsFromJson(credentials.readAsStringSync()), Client()));
+  }
+
+  Future<AutoRefreshingAuthClient> _newClientWithSavedCredentialsInFile(File credentials) {
+    return clientViaUserConsent(ClientId(_clientId, _clientSecret), _scopes, _prompt)
+      ..then((authClient) => {
+            credentials.writeAsStringSync(_credentialsToJson(authClient.credentials),
+                mode: FileMode.write, encoding: utf8, flush: true)
+          });
   }
 
   String _credentialsToJson(AccessCredentials credentials) => jsonEncode({

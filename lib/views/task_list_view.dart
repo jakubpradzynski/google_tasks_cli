@@ -16,52 +16,52 @@ class TaskListView extends View {
   @override
   Future<Selectable> render() async {
     await super.render();
-    print('List - ${_list.title}');
-    tasks ??= taskListsRepository.getTasks(_list.id)..sort((t1, t2) => t2.status.compareTo(t1.status));
-    var tasksAndOptions = tasks
-            .where((task) {
-              if (!showCompleted) {
-                return task.status != 'completed';
-              }
-              return true;
-            })
-            .map((task) => task as Selectable)
-            .toList() +
-        [
-          ADD_NEW_TASK,
-          showCompleted ? HIDE_COMPLETED : SHOW_COMPLETED,
-          CLEAR_COMPLETED_TASKS,
-          EDIT_LIST_NAME,
-          DELETE_LIST,
-          BACK
-        ];
+    _printTaskList();
+    tasks ??= _getSortedTasks();
+    var tasksAndOptions = _filterTasksToShow() + _getAllowedOptions();
     var selectedTaskOrOption = prompt.choose('Select task or action', tasksAndOptions);
     if (selectedTaskOrOption == BACK) return BACK;
-    if (selectedTaskOrOption == SHOW_COMPLETED) {
-      return TaskListView(taskListsRepository, _list, tasks: tasks, showCompleted: true).render();
-    }
-    if (selectedTaskOrOption == HIDE_COMPLETED) {
-      return TaskListView(taskListsRepository, _list, tasks: tasks, showCompleted: false).render();
+    if ([SHOW_COMPLETED, HIDE_COMPLETED].contains(selectedTaskOrOption)) {
+      return TaskListView(taskListsRepository, _list, tasks: tasks, showCompleted: !showCompleted).render();
     }
     if (selectedTaskOrOption == CLEAR_COMPLETED_TASKS) {
       await taskListsRepository.deleteTasks(
           _list.id, tasks.where((task) => task.status == 'completed').map((task) => task.id).toList());
-      return TaskListView(taskListsRepository, _list, showCompleted: showCompleted).render();
     }
-    if (selectedTaskOrOption == EDIT_LIST_NAME) {
-      var newListName = prompt.get('New list name:', defaultsTo: _list.title);
-      await taskListsRepository.updateTaskListTitle(_list.id, newListName);
-    }
-    if (selectedTaskOrOption == DELETE_LIST) {
-      await taskListsRepository.deleteTaskList(_list.id);
-    }
-    var result;
-    if (selectedTaskOrOption == ADD_NEW_TASK) result = await NewTaskView(taskListsRepository, _list).render();
+    if (selectedTaskOrOption == EDIT_LIST_NAME) await _editListName();
+    if (selectedTaskOrOption == DELETE_LIST) return await _deleteTaskList();
+    if (selectedTaskOrOption == ADD_NEW_TASK) await NewTaskView(taskListsRepository, _list).render();
     if (selectedTaskOrOption is Task) {
-      result = await ExistingTaskView(taskListsRepository, _list, selectedTaskOrOption).render();
+      await ExistingTaskView(taskListsRepository, _list, selectedTaskOrOption).render();
     }
-    if (result == BACK) return TaskListView(taskListsRepository, _list, showCompleted: showCompleted).render();
-    if (result == REFRESH) return TaskListView(taskListsRepository, _list, showCompleted: showCompleted).render();
-    return DO_NOTHING;
+    return TaskListView(taskListsRepository, taskListsRepository.getTaskListById(_list.id), showCompleted: showCompleted).render();
+  }
+
+  Future<Selectable> _deleteTaskList() async {
+    await taskListsRepository.deleteTaskList(_list.id);
+    return REFRESH;
+  }
+
+  void _printTaskList() {
+    print('List - ${_list.title}');
+  }
+
+  List<Task> _getSortedTasks() => taskListsRepository.getTasks(_list.id)..sort((t1, t2) => t2.status.compareTo(t1.status));
+
+  List<Selectable> _filterTasksToShow() =>
+      tasks.where((task) => showCompleted || (task.status != 'completed')).map((task) => task as Selectable).toList();
+
+  List<Selectable> _getAllowedOptions() => [
+        ADD_NEW_TASK,
+        showCompleted ? HIDE_COMPLETED : SHOW_COMPLETED,
+        CLEAR_COMPLETED_TASKS,
+        EDIT_LIST_NAME,
+        DELETE_LIST,
+        BACK
+      ];
+
+  Future _editListName() async {
+    var newListName = prompt.get('New list name:', defaultsTo: _list.title);
+    await taskListsRepository.updateTaskListTitle(_list.id, newListName);
   }
 }

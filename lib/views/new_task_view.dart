@@ -14,10 +14,14 @@ class NewTaskView extends View {
     var newTaskTitle = prompt.get('Your new task:', defaultsTo: '');
     var newTaskNotes = prompt.get('Task notes:', defaultsTo: '');
     var newTaskDueDate = prompt.get('Task due date, example "2020-01-01":', defaultsTo: '');
+    await _addNewTaskIfPassed(newTaskTitle, newTaskDueDate, newTaskNotes);
+    return REFRESH;
+  }
+
+  Future _addNewTaskIfPassed(String newTaskTitle, String newTaskDueDate, String newTaskNotes) async {
     if (newTaskTitle != null && newTaskTitle.isNotEmpty) {
       if (newTaskDueDate != null && newTaskDueDate.isNotEmpty) newTaskDueDate += 'T00:00:00.0Z';
       await taskListsRepository.addTaskToList(_list.id, newTaskTitle, notes: newTaskNotes, dueDate: newTaskDueDate);
     }
-    return REFRESH;
   }
 }
