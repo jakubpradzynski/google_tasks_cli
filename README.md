@@ -68,6 +68,8 @@ That's why you will be ask for enter to the given link and give appropriate perm
 App will save received credentials to file set in environment variable **GoogleApiCredentialsFilePath**
 and refresh token when it's necessary.
 
+![Authorization Link View](screenshots/AuthorizationLinkView.png)
+
 &nbsp;
 
 ## Notifications
@@ -80,6 +82,21 @@ and change the `alert style` to `Alerts`:
 &nbsp;
 
 ## Usage
+
+### Lists view
+<p align="center">
+    <img src="screenshots/ExampleListsView.png">
+</p>
+
+### Task list view
+<p align="center">
+    <img src="screenshots/ExampleListView.png">
+</p>
+
+### Task view
+<p align="center">
+    <img src="screenshots/ExampleTaskView.png">
+</p>
 
 ### Clearing task notes and due date
 When you edit task you can write `null` in notes and due date to clear them.
