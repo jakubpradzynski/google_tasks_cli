@@ -22,7 +22,8 @@ class TaskListsRepository {
 
   List<TaskList> get taskLists => _taskLists;
 
-  TaskList getTaskListById(String listId) => _taskLists.where((taskList) => taskList.id == listId).first;
+  TaskList getTaskListById(String listId) =>
+      _taskLists.firstWhere((taskList) => taskList.id == listId, orElse: () => null);
 
   List<Task> getTasks(String listId) => _tasksPerList[listId] ?? [];
 
